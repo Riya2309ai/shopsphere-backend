@@ -7,6 +7,7 @@ import com.riya.shopsphere.enums.Role;
 import com.riya.shopsphere.exception.EmailAlreadyExistsException;
 import com.riya.shopsphere.repository.UserRepository;
 import com.riya.shopsphere.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,9 +16,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userRequest.getName());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setRole(Role.CUSTOMER);
 
         if(existingUser.isPresent()){

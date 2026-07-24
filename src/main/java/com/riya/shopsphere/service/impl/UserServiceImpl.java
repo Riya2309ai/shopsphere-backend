@@ -1,5 +1,7 @@
 package com.riya.shopsphere.service.impl;
 
+import com.riya.shopsphere.dto.LoginRequest;
+import com.riya.shopsphere.dto.LoginResponse;
 import com.riya.shopsphere.dto.UserRequest;
 import com.riya.shopsphere.dto.UserResponse;
 import com.riya.shopsphere.entity.User;
@@ -7,8 +9,12 @@ import com.riya.shopsphere.enums.Role;
 import com.riya.shopsphere.exception.EmailAlreadyExistsException;
 import com.riya.shopsphere.repository.UserRepository;
 import com.riya.shopsphere.service.UserService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
@@ -47,5 +53,12 @@ public class UserServiceImpl implements UserService {
         userResponse.setRole(savedUser.getRole());
 
         return userResponse;
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest loginRequest) {
+        //ToDo
+        return new LoginResponse("Dummy Token");
+
     }
 }
